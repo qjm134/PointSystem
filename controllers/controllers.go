@@ -138,7 +138,7 @@ func updatePoints(w http.ResponseWriter, r *http.Request, operation int8) {
 		query = "INSERT " + recordTable + " (user_id, order_id, operation, points, record_time) VALUES(?, ?, ?, ?, ?)"
 		_, err = tx.Exec(query, userId, orderId, operation, points, recordTime)
 		if err != nil {
-			tx.Commit()
+			tx.Rollback()
 			msg = "更新失败"
 			return
 		}
